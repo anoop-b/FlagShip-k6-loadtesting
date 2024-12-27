@@ -1,5 +1,6 @@
-import http from 'k6/http';
 import { sleep } from 'k6';
+import http from 'k6/http';
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.
@@ -13,7 +14,6 @@ export const options = {
     // http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
   },
 
-
   // The following section contains configuration options for execution of this
   // test script in Grafana Cloud.
   //
@@ -26,7 +26,7 @@ export const options = {
   //   projectID: "",
   //   // The name of the test in the k6 Cloud UI.
   //   // Test runs with the same name will be grouped.
-  //   name: "db,js"
+  //   name: "script.js"
   // },
 
   // Uncomment this section to enable the use of Browser API in your tests.
@@ -61,6 +61,9 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  http.get('https://worker.inboxanoop.workers.dev/db');
-  sleep(1);
+  const url = new URL('https://benchmarks.djoker.tech/launchdarkly-ci');
+  url.searchParams.append('name', 'ld-ci2-nov22');
+  http.get(url.toString());
+
+  sleep(1)
 }

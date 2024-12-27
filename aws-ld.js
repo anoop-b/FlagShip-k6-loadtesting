@@ -10,9 +10,8 @@ export const options = {
   ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    // http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
+    // http_req_duration: ['p(95)<2000'], // 95% requests should be below 2s
   },
-
 
   // The following section contains configuration options for execution of this
   // test script in Grafana Cloud.
@@ -26,7 +25,7 @@ export const options = {
   //   projectID: "",
   //   // The name of the test in the k6 Cloud UI.
   //   // Test runs with the same name will be grouped.
-  //   name: "db,js"
+  //   name: "aws-ping"
   // },
 
   // Uncomment this section to enable the use of Browser API in your tests.
@@ -61,6 +60,6 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  http.get('https://worker.inboxanoop.workers.dev/db');
+  http.get('https://benchmarks.djoker.tech/launchdarkly');
   sleep(1);
 }

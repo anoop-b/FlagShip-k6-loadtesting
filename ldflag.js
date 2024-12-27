@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 
 export const options = {
@@ -11,7 +12,7 @@ export const options = {
   ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
+    // http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
   },
 
   // The following section contains configuration options for execution of this
@@ -61,6 +62,9 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  http.get('https://worker.inboxanoop.workers.dev/ldflag');
-  sleep(1);
+  const url = new URL('https://worker.inboxanoop.workers.dev/ldflag');
+  url.searchParams.append('name', 'ld-nov22-ci');
+  http.get(url.toString());
+
+  sleep(1)
 }

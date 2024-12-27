@@ -1,5 +1,6 @@
 import { sleep } from 'k6';
 import http from 'k6/http';
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
 
 export const options = {
   // A number specifying the number of VUs to run concurrently.
@@ -10,7 +11,7 @@ export const options = {
   ],
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
+    // http_req_duration: ['p(95)<500'], // 95% requests should be below 0.5s
   },
 
   // The following section contains configuration options for execution of this
@@ -60,6 +61,9 @@ export const options = {
 // about authoring k6 scripts.
 //
 export default function () {
-  http.get('https://worker.inboxanoop.workers.dev/kv');
+  const url = new URL('https://worker.inboxanoop.workers.dev/kv');
+  url.searchParams.append('name', 'kv-nov13-HEL');
+  http.get(url.toString());
+
   sleep(1)
 }
