@@ -38,9 +38,9 @@ There's a considerable delay in the first request for both KV and D1. This could
 
 The above results are as observed on the end devices (browser on a laptop/k6).
 
-## Other considerations
+The above observations also include the latency between the test machine and the nearest cloudflare edge location. To calculate the latency at the edge itself, the worker returns the calculated latency as seen by the worker during the runtime.
 
-- The above observations also include the latency between the test machine and the nearest cloudflare edge location. To calculate the latency at the edge itself, the worker returns the calculated latency as seen by the worker during the runtime.
+## For future considerations
 
 - What is the imapact of Cloudflare workers smart placement consfiguration on the latency?
 
@@ -49,4 +49,4 @@ The above results are as observed on the end devices (browser on a laptop/k6).
 
 - What is the time taken for the KV results to be replicated across different regions?
 
-- What is the time delay between updating KV values?
+- What is the propagation delay between updating KV values?
